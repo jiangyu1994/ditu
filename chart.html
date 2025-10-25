@@ -125,7 +125,7 @@
     <div class="container">
         <div class="header">
             <h1>大连市旅游接待人数分析</h1>
-            <p>数据展示了2007年至2023年大连市旅游接待人数的变化趋势及同比增长情况，2023年旅游业呈现强劲复苏态势</p>
+            <p>数据展示了2007年至2024年大连市旅游接待人数的变化趋势及同比增长情况，2024年旅游业持续增长态势</p>
         </div>
 
         <div class="chart-container">
@@ -138,20 +138,20 @@
 
             <div class="stats">
                 <div class="stat-box">
-                    <div class="stat-label">2023年接待人数</div>
-                    <div class="stat-value">13,600万</div>
+                    <div class="stat-label">2024年接待人数</div>
+                    <div class="stat-value">17,300万</div>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-label">2023年同比增长</div>
-                    <div class="stat-value">76.95%</div>
+                    <div class="stat-label">2024年同比增长</div>
+                    <div class="stat-value">27.20%</div>
                 </div>
                 <div class="stat-box">
                     <div class="stat-label">历史最高年份</div>
-                    <div class="stat-value">2023年</div>
+                    <div class="stat-value">2024年</div>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-label">2007-2023年增长</div>
-                    <div class="stat-value">430%</div>
+                    <div class="stat-label">2007-2024年增长</div>
+                    <div class="stat-value">575%</div>
                 </div>
             </div>
         </div>
@@ -162,10 +162,10 @@
     </div>
 
     <script>
-        // 数据准备 - 已修正年份顺序
-        const years = [2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2022, 2023];
-        const visitors = [2564.00, 3095.00, 3517.00, 3893.70, 4377.60, 4943.30, 5349.90, 5716.40, 6926.60, 7738.20, 8516.40, 9398.40, 10382.70, 3997.30, 7685.70, 13600.00];
-        const growthRates = [null, 20.71, 13.63, 10.71, 12.43, 12.92, 8.23, 6.85, 21.17, 11.72, 10.06, 10.36, 10.47, -61.5, null, 76.95];
+        // 数据准备 - 已添加2024年数据
+        const years = [2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2022, 2023, 2024];
+        const visitors = [2564.00, 3095.00, 3517.00, 3893.70, 4377.60, 4943.30, 5349.90, 5716.40, 6926.60, 7738.20, 8516.40, 9398.40, 10382.70, 3997.30, 7685.70, 13600.00, 17300.00];
+        const growthRates = [null, 20.71, 13.63, 10.71, 12.43, 12.92, 8.23, 6.85, 21.17, 11.72, 10.06, 10.36, 10.47, -61.5, null, 76.95, 27.20];
 
         // 获取Canvas上下文
         const ctx = document.getElementById('tourismChart').getContext('2d');
@@ -180,12 +180,14 @@
                         label: '接待人数(万人次)',
                         data: visitors,
                         backgroundColor: years.map(year =>
-                            year === 2023 ? '#1a6fb0' :
+                            year === 2024 ? '#1a6fb0' :
+                            year === 2023 ? '#3498db' :
                             year === 2020 ? '#e74c3c' :
                             year >= 2019 ? '#3498db' : '#a0d2ff'
                         ),
                         borderColor: years.map(year =>
-                            year === 2023 ? '#0d4d7a' :
+                            year === 2024 ? '#0d4d7a' :
+                            year === 2023 ? '#2980b9' :
                             year === 2020 ? '#c0392b' :
                             year >= 2019 ? '#2980b9' : '#7bb7f0'
                         ),
@@ -201,6 +203,7 @@
                         backgroundColor: 'rgba(243, 156, 18, 0.1)',
                         borderWidth: 3,
                         pointBackgroundColor: years.map(year =>
+                            year === 2024 ? '#e67e22' :
                             year === 2023 ? '#e67e22' :
                             year === 2020 ? '#e74c3c' : '#f39c12'
                         ),
@@ -270,7 +273,7 @@
                             text: '接待人数(万人次)'
                         },
                         min: 0,
-                        max: 15000
+                        max: 18000
                     },
                     y1: {
                         type: 'linear',
@@ -309,7 +312,7 @@
             tourismChart.data.labels = recentYears;
             tourismChart.data.datasets[0].data = recentVisitors;
             tourismChart.data.datasets[1].data = recentGrowth;
-            tourismChart.options.scales.y.max = 15000;
+            tourismChart.options.scales.y.max = 18000;
             tourismChart.update();
         });
 
@@ -318,7 +321,7 @@
             tourismChart.data.labels = years;
             tourismChart.data.datasets[0].data = visitors;
             tourismChart.data.datasets[1].data = growthRates;
-            tourismChart.options.scales.y.max = 15000;
+            tourismChart.options.scales.y.max = 18000;
             tourismChart.update();
         });
 
