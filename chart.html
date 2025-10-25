@@ -13,7 +13,7 @@
             font-family: "Microsoft YaHei", sans-serif;
         }
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -24,12 +24,13 @@
             max-width: 1000px;
             width: 100%;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(39, 71, 83, 0.1);
             overflow: hidden;
+            border: 1px solid #e9ecef;
         }
         .header {
-            background: linear-gradient(to right, #1a6fb0, #2c9cd4);
+            background: linear-gradient(to right, #274753, #297270);
             color: white;
             padding: 25px 30px;
             text-align: center;
@@ -61,16 +62,20 @@
             background: white;
             border-radius: 10px;
             padding: 15px 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(39, 71, 83, 0.08);
             text-align: center;
             flex: 1;
             min-width: 150px;
-            border-top: 4px solid #2c9cd4;
+            border-top: 4px solid #299d8f;
+            transition: transform 0.3s ease;
+        }
+        .stat-box:hover {
+            transform: translateY(-5px);
         }
         .stat-value {
             font-size: 24px;
             font-weight: bold;
-            color: #1a6fb0;
+            color: #274753;
             margin: 5px 0;
         }
         .stat-label {
@@ -82,7 +87,8 @@
             padding: 15px;
             color: #666;
             font-size: 14px;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #e9ecef;
+            background: #f8f9fa;
         }
         .controls {
             display: flex;
@@ -92,21 +98,21 @@
         }
         .control-btn {
             padding: 8px 15px;
-            background: #f0f7ff;
-            border: 1px solid #c3dfff;
+            background: #f8f9fa;
+            border: 1px solid #8ab07c;
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s;
-            color: #1a6fb0;
+            color: #274753;
             font-weight: 500;
         }
         .control-btn:hover {
-            background: #d9ebff;
+            background: #e7f4e7;
         }
         .control-btn.active {
-            background: #1a6fb0;
+            background: #299d8f;
             color: white;
-            border-color: #1a6fb0;
+            border-color: #299d8f;
         }
         @media (max-width: 768px) {
             .header h1 {
@@ -118,6 +124,9 @@
             .chart-container {
                 padding: 15px;
             }
+            .stat-box {
+                min-width: 120px;
+            }
         }
     </style>
 </head>
@@ -125,7 +134,7 @@
     <div class="container">
         <div class="header">
             <h1>大连市旅游接待人数分析</h1>
-            <p>数据展示了2007年至2024年大连市旅游接待人数的变化趋势及同比增长情况，2024年旅游业持续增长态势</p>
+            <p>数据展示了2007年至2024年大连市旅游接待人数的变化趋势及同比增长情况</p>
         </div>
 
         <div class="chart-container">
@@ -157,7 +166,7 @@
         </div>
 
         <div class="footer">
-            <p>数据来源：大连市旅游统计</p>
+            <p>数据来源：大连市旅游统计 | 可视化图表可嵌入地图故事中</p>
         </div>
     </div>
 
@@ -179,37 +188,47 @@
                     {
                         label: '接待人数(万人次)',
                         data: visitors,
-                        backgroundColor: years.map(year =>
-                            year === 2024 ? '#1a6fb0' :
-                            year === 2023 ? '#3498db' :
-                            year === 2020 ? '#e74c3c' :
-                            year >= 2019 ? '#3498db' : '#a0d2ff'
-                        ),
-                        borderColor: years.map(year =>
-                            year === 2024 ? '#0d4d7a' :
-                            year === 2023 ? '#2980b9' :
-                            year === 2020 ? '#c0392b' :
-                            year >= 2019 ? '#2980b9' : '#7bb7f0'
-                        ),
+                        backgroundColor: years.map(year => {
+                            if (year === 2024) return '#e66d50';
+                            if (year === 2023) return '#f3a361';
+                            if (year === 2020) return '#274753';
+                            if (year >= 2019) return '#e7c66b';
+                            if (year >= 2015) return '#8ab07c';
+                            if (year >= 2010) return '#299d8f';
+                            return '#297270';
+                        }),
+                        borderColor: years.map(year => {
+                            if (year === 2024) return '#d45a40';
+                            if (year === 2023) return '#e09357';
+                            if (year === 2020) return '#1a353f';
+                            if (year >= 2019) return '#d4b35d';
+                            if (year >= 2015) return '#7a9e6a';
+                            if (year >= 2010) return '#248d7f';
+                            return '#216260';
+                        }),
                         borderWidth: 1,
                         yAxisID: 'y',
-                        order: 2
+                        order: 2,
+                        borderRadius: 4
                     },
                     {
                         label: '同比增长(%)',
                         data: growthRates,
                         type: 'line',
-                        borderColor: '#f39c12',
-                        backgroundColor: 'rgba(243, 156, 18, 0.1)',
+                        borderColor: '#274753',
+                        backgroundColor: 'rgba(39, 71, 83, 0.05)',
                         borderWidth: 3,
-                        pointBackgroundColor: years.map(year =>
-                            year === 2024 ? '#e67e22' :
-                            year === 2023 ? '#e67e22' :
-                            year === 2020 ? '#e74c3c' : '#f39c12'
-                        ),
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
-                        fill: false,
+                        pointBackgroundColor: years.map(year => {
+                            if (year === 2024) return '#e66d50';
+                            if (year === 2023) return '#f3a361';
+                            if (year === 2020) return '#274753';
+                            return '#297270';
+                        }),
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6,
+                        pointHoverRadius: 8,
+                        fill: true,
                         tension: 0.3,
                         yAxisID: 'y1',
                         order: 1
@@ -227,13 +246,20 @@
                         display: true,
                         text: '大连市旅游接待人数与同比增长趋势',
                         font: {
-                            size: 18
+                            size: 18,
+                            weight: 'bold'
                         },
+                        color: '#274753',
                         padding: {
                             bottom: 20
                         }
                     },
                     tooltip: {
+                        backgroundColor: 'rgba(39, 71, 83, 0.9)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        borderColor: '#297270',
+                        borderWidth: 1,
                         callbacks: {
                             label: function(context) {
                                 let label = context.dataset.label || '';
@@ -255,13 +281,31 @@
                     },
                     legend: {
                         position: 'top',
+                        labels: {
+                            color: '#274753',
+                            font: {
+                                size: 13,
+                                weight: 'bold'
+                            },
+                            padding: 15
+                        }
                     }
                 },
                 scales: {
                     x: {
                         title: {
                             display: true,
-                            text: '年份'
+                            text: '年份',
+                            color: '#274753',
+                            font: {
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(39, 71, 83, 0.1)'
+                        },
+                        ticks: {
+                            color: '#274753'
                         }
                     },
                     y: {
@@ -270,10 +314,20 @@
                         position: 'left',
                         title: {
                             display: true,
-                            text: '接待人数(万人次)'
+                            text: '接待人数(万人次)',
+                            color: '#274753',
+                            font: {
+                                weight: 'bold'
+                            }
                         },
                         min: 0,
-                        max: 18000
+                        max: 18000,
+                        grid: {
+                            color: 'rgba(39, 71, 83, 0.1)'
+                        },
+                        ticks: {
+                            color: '#274753'
+                        }
                     },
                     y1: {
                         type: 'linear',
@@ -281,13 +335,20 @@
                         position: 'right',
                         title: {
                             display: true,
-                            text: '同比增长(%)'
+                            text: '同比增长(%)',
+                            color: '#274753',
+                            font: {
+                                weight: 'bold'
+                            }
                         },
                         min: -70,
                         max: 90,
                         grid: {
                             drawOnChartArea: false,
                         },
+                        ticks: {
+                            color: '#274753'
+                        }
                     }
                 }
             }
